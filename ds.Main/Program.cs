@@ -37,9 +37,8 @@ Parallel.Invoke(
 );
 
 string hMapDefinition = string.Empty, treeDefinition = string.Empty;
-Thread.Sleep(1000);
+GC.Collect();
 Parallel.Invoke(
-    () => { GC.Collect(); Thread.Sleep(1000); },
     () =>
     {
         int threadId = Thread.CurrentThread.ManagedThreadId;
@@ -61,6 +60,11 @@ Parallel.Invoke(
         });
         treeSearchMetrics.DisplayInfo(bst => Console.WriteLine(bst));
     }
+);
+
+Extra.GetOutro(
+    $"{wordToSearch} (HMAP Definition): {hMapDefinition}",
+    $"{wordToSearch} (TREE Definition): {treeDefinition}"
 );
 
 Extra.GetOutro(
